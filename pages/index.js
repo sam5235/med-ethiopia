@@ -1,130 +1,65 @@
 import {
-  Avatar,
-  border,
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Center,
-  Container,
-  Divider,
   Flex,
-  Grid,
-  GridItem,
+  Container,
   Heading,
-  Image,
+  Stack,
   Text,
-  useColorModeValue,
+  Button,
+  Icon,
+  IconProps,
 } from "@chakra-ui/react";
-import { async } from "@firebase/util";
-import { useEffect, useState } from "react";
-import { getBlogs } from "../firebase/blogService";
-export default function Home() {
-  const [posts, setPosts] = useState([]);
-  const popular = posts;
-  const fetchBlogs = async () => {
-    const blogs = await getBlogs();
-    setPosts(blogs);
-    console.log(blogs);
-  };
+import { Illustration } from "../components/illustrations/landing-page";
+import BasicStatistics from "../components/StatsCard";
+import ThreeTierPricingHorizontal from "../components/PackageTier";
+import LargeWithLogoLeft from "../components/Footer";
 
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
+export default function LandingPage() {
   return (
-    <Grid
-      templateColumns="repeat(12, 1fr)"
-      height="calc(100vh - 50px)"
-      p={5}
-      mt={7}
-      gap={3}
-    >
-      <GridItem colSpan={8}>
-        {posts.map((blog, index) => {
-          return (
-            <Box mb={10} pt={3} key={index}>
-              <Grid templateColumns="repeat(10, 1fr)">
-                <GridItem width="160px" height="130px" colSpan={2}>
-                  <Image
-                    borderRadius="2xl"
-                    boxSize="100%"
-                    objectFit="cover"
-                    src={blog.coverImage}
-                  />
-                </GridItem>
-                <GridItem ml={4} colSpan={8}>
-                  <Box mb={2}>
-                    <Heading fontSize="xl" as="b">
-                      {blog.title}
-                    </Heading>
-                  </Box>
-                  <Box>
-                    <Text fontSize="md" as="i" noOfLines="2">
-                      {blog.description}
-                    </Text>
-                  </Box>
-                  <Flex mt={2}>
-                    <Avatar name={blog.name} />
-                    <Box ml={2}>
-                      <Text as="b">{blog.name}</Text>
-                      <Flex mt={2}>
-                        <Text as="sub" mr={2}>
-                          {new Date(blog.datePublished).toString().slice(4, 15)}
-                        </Text>
-                        <Text as="sub">{blog.length.text}</Text>
-                      </Flex>
-                    </Box>
-                  </Flex>
-                </GridItem>
-              </Grid>
-            </Box>
-          );
-        })}
-        <Center p={4}>
-          <Button colorScheme="brand" boxShadow="dark-lg">
-            More
-          </Button>
-        </Center>
-      </GridItem>
-      <GridItem colSpan={4}>
-        <Box position="sticky" top="80px" p={3} maxH="300px">
-          <Text mb={5} fontSize="xl" as="b">
-            POPULAR THIS WEEK
+    <Container maxW={"5xl"}>
+      <Stack
+        textAlign={"center"}
+        align={"center"}
+        spacing={{ base: 8, md: 10 }}
+        py={{ base: 20, md: 28 }}
+      >
+        <Heading
+          fontWeight={600}
+          fontSize={{ base: "3xl", sm: "4xl", md: "5xl" }}
+          lineHeight={"110%"}
+        >
+          Efficient Care by{" "}
+          <Text as={"span"} color={"brand.600"}>
+            Centralized Excellence!
           </Text>
-          <div style={{ borderBottom: "1px solid black" }}></div>
-          {popular.map((pop, index) => {
-            if (index < 5)
-              return (
-                <Flex mt={7}>
-                  <Text mr={2} as="bold" fontSize="xl" color="gray.500">
-                    0{index + 1}
-                  </Text>
-                  <Box>
-                    <Flex>
-                      <Image
-                        borderRadius="md"
-                        objectFit="cover"
-                        width="40px"
-                        height="40px"
-                        src={pop.coverImage}
-                      />
-                      <Box>
-                        <Text ml={2} fontSize="xl" as="b" noOfLines={1}>
-                          {pop.title}
-                        </Text>
-                      </Box>
-                    </Flex>
-                    <Text fontSize="sm" noOfLines={2}>
-                      {pop.description}
-                    </Text>
-                    <Text as="sub">{pop.length.text}</Text>
-                  </Box>
-                </Flex>
-              );
-          })}
-        </Box>
-      </GridItem>
-    </Grid>
+        </Heading>
+        <Text color={"gray.500"} maxW={"3xl"}>
+          Seamlessly Connects, Coordinates, and Transforms Care. Streamline
+          Operations, Enhance Collaboration, and Improve Patient Outcomes.
+          Experience Efficiency and Excellence in Healthcare Management Today!
+        </Text>
+        <Stack spacing={6} direction={"row"}>
+          <Button
+            rounded={"full"}
+            px={6}
+            colorScheme={"brand"}
+            _hover={{ bg: "brand.400" }}
+          >
+            Get started
+          </Button>
+          <Button variant="outline" rounded={"full"} px={6}>
+            Learn more
+          </Button>
+        </Stack>
+        <Flex w={"full"}>
+          <Illustration height={{ sm: "35rem", lg: "40rem" }} ƒ mx="auto" />
+        </Flex>
+      </Stack>
+
+      <BasicStatistics />
+
+      <ThreeTierPricingHorizontal />
+
+      <LargeWithLogoLeft />
+    </Container>
   );
 }
