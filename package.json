@@ -1,0 +1,29 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.13",
+    "@chakra-ui/react": "^2.4.4",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
+    "@next/font": "13.0.7",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.0.7",
+    "firebase": "^9.17.1",
+    "framer-motion": "6",
+    "next": "13.0.7",
+    "nprogress": "^0.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icon": "^1.0.0",
+    "react-icons": "^4.7.1",
+    "yarn": "^1.22.19"
+  }
+}
