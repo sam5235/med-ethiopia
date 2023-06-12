@@ -38,12 +38,13 @@ export default function Home() {
         {posts.map((blog, index) => {
           return (
             <Link
+            key={index}
               href={{
                 pathname: "/blog-detail",
                 query: blog,
               }}
             >
-              <Box mb={10} pt={3} key={index}>
+              <Box mb={10} pt={3} >
                 <Grid templateColumns="repeat(10, 1fr)">
                   <GridItem width="160px" height="130px" colSpan={2}>
                     <Image
