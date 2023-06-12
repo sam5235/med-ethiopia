@@ -19,10 +19,9 @@ export default function App({ Component, pageProps }) {
   const { pathname } = useRouter();
 
   // add paths that should be protected
-  const shouldBeAuth = ["/records", "/profile"].includes(
+  const shouldBeAuth = ["/records", "/profile", "/settings"].includes(
     pathname?.toLowerCase()
   );
-  console.log(shouldBeAuth)
 
   return (
     <ChakraProvider theme={theme}>

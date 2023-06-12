@@ -1,11 +1,19 @@
+import { useRouter } from "next/router";
+import LargeWithLogoLeft from "../components/Footer";
+import { Box, Container } from "@chakra-ui/react";
+
 import Navbar from "./Navbar";
-import { Box, useColorModeValue, Container } from "@chakra-ui/react";
 
 const Layout = ({ children }) => {
+  const { pathname } = useRouter();
+
   return (
     <Box>
       <Navbar />
-      <Container pt={9} maxW={"7xl"}>{children}</Container>
+      <Container pt={9} maxW={"7xl"}>
+        {children}
+      </Container>
+      {pathname === "/" && <LargeWithLogoLeft />}
     </Box>
   );
 };
