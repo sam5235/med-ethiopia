@@ -21,13 +21,13 @@ import Link from "next/link";
 
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getMyProfileData } from "../firebase/profileServices";
 
 const Links = [
   { name: "Analytics", href: "/analytics" },
-  { name: "Appointment", href: "#" },
-  { name: "Blog", href: "/blog" },
+  { name: "Appointment", href: "/appointment" },
+  { name: "Blog", href: "/blogs" },
   { name: "Records", href: "/records", authorized: true },
 ];
 
@@ -43,11 +43,12 @@ const Navbar = () => {
     const fetchMyData = () => {
       getMyProfileData().then((data) => {
         setUserData(data);
+        console.log(data);
       });
     };
 
     fetchMyData();
-  }, []);
+  }, [user]);
 
   return (
     <Box

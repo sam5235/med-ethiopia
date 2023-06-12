@@ -52,7 +52,7 @@ const AnalyticsPage = () => {
   const [chart, setChart] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState("2022-01-01");
-  const [endDate, setEndDate] = useState("2023-05-01");
+  const [endDate, setEndDate] = useState("2023-06-13");
   const [diseases, setDiseases] = useState([
     { value: "Anaplasmosis", label: "Anaplasmosis" },
     { value: "Anthrax", label: "Anthrax" },
@@ -78,7 +78,7 @@ const AnalyticsPage = () => {
       await getRecords(
         ["Anaplasmosis", "Anthrax"],
         "2022-01-01",
-        "2023-05-01"
+        "2023-06-13"
       ).then((data) => {
         setIsLoading(false);
         setChart(data);

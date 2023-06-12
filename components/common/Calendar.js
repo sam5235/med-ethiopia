@@ -9,15 +9,24 @@ import {
   CalendarWeek,
   CalendarDays,
 } from "@uselessdev/datepicker";
-import { useState } from "react";
 
-const SimpleCalendar = () => {
-  const [dates, setDates] = useState([]);
+const getLastDay = (date) => {
+  date.setDate(date.getDate() - 1);
+  return date;
+};
 
-  const handleSelectDate = (values) => setDates(values);
+const SimpleCalendar = ({ date, setDate }) => {
+  const handleSelectDate = (values) => setDate(values);
 
   return (
-    <Calendar value={dates} onSelectDate={handleSelectDate}>
+    <Calendar
+      singleDateSelection
+      highlightToday
+      value={{ start: date }}
+      allowOutsideDays
+      disablePastDates={getLastDay(new Date())}
+      onSelectDate={handleSelectDate}
+    >
       <CalendarControls>
         <CalendarPrevButton />
         <CalendarNextButton />
