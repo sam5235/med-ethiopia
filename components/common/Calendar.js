@@ -1,6 +1,5 @@
 import {
   Calendar,
-  CalendarDefaultTheme,
   CalendarControls,
   CalendarPrevButton,
   CalendarNextButton,

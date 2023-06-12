@@ -24,9 +24,9 @@ import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/router";
 
 const Links = [
-  { name: "Analytics", href: "#" },
-  { name: "Appointment", href: "#" },
-  { name: "Blog", href: "/blog" },
+  { name: "Analytics", href: "analytics" },
+  { name: "Appointment", href: "/appointment" },
+  { name: "Blogs", href: "/blogs" },
   // { name: "About Us", href: "#" },
 ];
 

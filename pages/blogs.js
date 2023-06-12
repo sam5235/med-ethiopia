@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getBlogs } from "../firebase/blogService";
+import Link from "next/link";
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const popular = posts;
@@ -36,43 +37,52 @@ export default function Home() {
       <GridItem colSpan={8}>
         {posts.map((blog, index) => {
           return (
-            <Box mb={10} pt={3} key={index}>
-              <Grid templateColumns="repeat(10, 1fr)">
-                <GridItem width="160px" height="130px" colSpan={2}>
-                  <Image
-                    alt=""
-                    borderRadius="2xl"
-                    boxSize="100%"
-                    objectFit="cover"
-                    src={blog.coverImage}
-                  />
-                </GridItem>
-                <GridItem ml={4} colSpan={8}>
-                  <Box mb={2}>
-                    <Heading fontSize="xl" as="b">
-                      {blog.title}
-                    </Heading>
-                  </Box>
-                  <Box>
-                    <Text fontSize="md" as="i" noOfLines="2">
-                      {blog.description}
-                    </Text>
-                  </Box>
-                  <Flex mt={2}>
-                    <Avatar name={blog.name} />
-                    <Box ml={2}>
-                      <Text as="b">{blog.name}</Text>
-                      <Flex mt={2}>
-                        <Text as="sub" mr={2}>
-                          {new Date(blog.datePublished).toString().slice(4, 15)}
-                        </Text>
-                        <Text as="sub">{blog.length.text}</Text>
-                      </Flex>
+            <Link
+              href={{
+                pathname: "/blog-detail",
+                query: blog,
+              }}
+            >
+              <Box mb={10} pt={3} key={index}>
+                <Grid templateColumns="repeat(10, 1fr)">
+                  <GridItem width="160px" height="130px" colSpan={2}>
+                    <Image
+                      alt=""
+                      borderRadius="2xl"
+                      boxSize="100%"
+                      objectFit="cover"
+                      src={blog.coverImage}
+                    />
+                  </GridItem>
+                  <GridItem ml={4} colSpan={8}>
+                    <Box mb={2}>
+                      <Heading fontSize="xl" as="b">
+                        {blog.title}
+                      </Heading>
                     </Box>
-                  </Flex>
-                </GridItem>
-              </Grid>
-            </Box>
+                    <Box>
+                      <Text fontSize="md" as="i" noOfLines="2">
+                        {blog.description}
+                      </Text>
+                    </Box>
+                    <Flex mt={2}>
+                      <Avatar name={blog.name} />
+                      <Box ml={2}>
+                        <Text as="b">{blog.name}</Text>
+                        <Flex mt={2}>
+                          <Text as="sub" mr={2}>
+                            {new Date(blog.datePublished)
+                              .toString()
+                              .slice(4, 15)}
+                          </Text>
+                          <Text as="sub">{blog.length.text}</Text>
+                        </Flex>
+                      </Box>
+                    </Flex>
+                  </GridItem>
+                </Grid>
+              </Box>
+            </Link>
           );
         })}
         <Center p={4}>

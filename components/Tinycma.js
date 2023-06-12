@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useColorMode } from "@chakra-ui/react";
+import { useRouter } from 'next/router'
 
-const BlogEditor = ({ theme, onEditorChange, editorRef, content }) => {
+
+const BlogEditor = ({ theme, editorRef, content }) => {
   return (
     <Editor
       tinymceScriptSrc={"/tinymce/js/tinymce/tinymce.min.js"}
@@ -17,26 +19,18 @@ const BlogEditor = ({ theme, onEditorChange, editorRef, content }) => {
         content_css: theme === "dark" ? "dark" : "default",
         height: "100vh",
       }}
-      onEditorChange={onEditorChange}
     />
   );
 };
 
-const TinyEditor = ({ blog, setBlog }) => {
+const TinyEditor = ({ blog }) => {
+
   const { colorMode } = useColorMode();
   const editorRef = useRef(null);
 
   const content = blog.content;
 
-  const setContent = (content) => {
-    setBlog((b) => ({ ...b, content }));
-  };
-
-  const onEditorChange = () => {
-    if (editorRef.current) {
-      setContent(editorRef.current.getContent());
-    }
-  };
+  
 
   if (colorMode === "light") {
     return (
@@ -45,7 +39,6 @@ const TinyEditor = ({ blog, setBlog }) => {
         theme="light"
         content={content}
         editorRef={editorRef}
-        onEditorChange={onEditorChange}
       />
     );
   }
@@ -56,7 +49,6 @@ const TinyEditor = ({ blog, setBlog }) => {
       theme="dark"
       content={content}
       editorRef={editorRef}
-      onEditorChange={onEditorChange}
     />
   );
 };
