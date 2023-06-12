@@ -12,7 +12,6 @@ import {
   Avatar,
   Text,
   useColorModeValue,
-  Divider,
   IconButton,
   HStack,
 } from "@chakra-ui/react";
@@ -22,12 +21,14 @@ import Link from "next/link";
 
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/router";
+import { use, useEffect, useState } from "react";
+import { getMyProfileData } from "../firebase/profileServices";
 
 const Links = [
-  { name: "Analytics", href: "analytics" },
+  { name: "Analytics", href: "/analytics" },
   { name: "Appointment", href: "/appointment" },
-  { name: "Blogs", href: "/blogs" },
-  // { name: "About Us", href: "#" },
+  { name: "Blog", href: "/blogs" },
+  { name: "Records", href: "/records", authorized: true },
 ];
 
 const Navbar = () => {
@@ -36,6 +37,18 @@ const Navbar = () => {
   const { pathname } = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
   const { user, logout } = useAuth();
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const fetchMyData = () => {
+      getMyProfileData().then((data) => {
+        setUserData(data);
+        console.log(data);
+      });
+    };
+
+    fetchMyData();
+  }, [user]);
 
   return (
     <Box
@@ -66,23 +79,29 @@ const Navbar = () => {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <Link key={link} href={link.href}>
-                  <Button
-                    px={2}
-                    py={1}
-                    mx={0}
-                    variant="ghost"
-                    rounded={"md"}
-                    _hover={{
-                      textDecoration: "none",
-                      bg,
-                    }}
-                  >
-                    {link.name}
-                  </Button>
-                </Link>
-              ))}
+              {Links.map((link) => {
+                if (link.authorized && !user) {
+                  return null;
+                }
+
+                return (
+                  <Link key={link.name} href={link.href}>
+                    <Button
+                      px={2}
+                      py={1}
+                      mx={0}
+                      variant="ghost"
+                      rounded={"md"}
+                      _hover={{
+                        textDecoration: "none",
+                        bg,
+                      }}
+                    >
+                      {link.name}
+                    </Button>
+                  </Link>
+                );
+              })}
             </HStack>
             <IconButton
               color="brand.600"
@@ -95,7 +114,7 @@ const Navbar = () => {
             {user ? (
               <Menu>
                 <MenuButton>
-                  <Avatar size={"sm"} />
+                  <Avatar size={"sm"} name={userData.name} />
                 </MenuButton>
 
                 <MenuList
@@ -103,19 +122,20 @@ const Navbar = () => {
                   flexDirection="column"
                   alignItems={"center"}
                 >
-                  <Box>
-                    <Image alt="user pci" src={user?.photoURL} width="200px" />
-                    <Divider />
-                  </Box>
-
-                  <MenuItem icon={<IoMdSettings />}>Settings</MenuItem>
+                  <MenuItem
+                    onClick={() => router.push("/settings")}
+                    icon={<IoMdSettings />}
+                  >
+                    Settings
+                  </MenuItem>
                   <MenuItem icon={<IoMdLogOut />} onClick={logout}>
                     Logout
                   </MenuItem>
                 </MenuList>
               </Menu>
             ) : (
-              pathname.toLowerCase() !== "/login" && (
+              pathname.toLowerCase() !== "/login" &&
+              pathname.toLowerCase() !== "/signup" && (
                 <Button
                   onClick={() => router.replace("/login")}
                   borderRadius="3xl"

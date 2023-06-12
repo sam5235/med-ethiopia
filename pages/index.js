@@ -51,15 +51,13 @@ export default function LandingPage() {
           </Button>
         </Stack>
         <Flex w={"full"}>
-          <Illustration height={{ sm: "35rem", lg: "40rem" }} ƒ mx="auto" />
+          <Illustration height={{ sm: "35rem", lg: "40rem" }} mx="auto" />
         </Flex>
       </Stack>
 
       <BasicStatistics />
 
       <ThreeTierPricingHorizontal />
-
-      <LargeWithLogoLeft />
     </Container>
   );
 }

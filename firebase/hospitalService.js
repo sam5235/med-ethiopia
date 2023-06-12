@@ -19,14 +19,13 @@ export const filterHospital = async (queries) => {
   const Lists = [];
   const nameq = query(
     collection(db, "health_centers"),
-    where("name", ">=", queries), where('name', "<=", queries + '\uf8ff')
+    where("name", ">=", queries),
+    where("name", "<=", queries + "\uf8ff")
     // where("name", "==", queries)
   );
   const querySnapshot = await getDocs(nameq);
-  console.log(querySnapshot);
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    Lists.push(doc.data());
+    Lists.push({ ...doc.data(), id: doc.id });
   });
   return Lists;
 };
