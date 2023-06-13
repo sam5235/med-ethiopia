@@ -5,15 +5,15 @@ import {
   Stack,
   Text,
   Button,
-  Icon,
-  IconProps,
 } from "@chakra-ui/react";
 import { Illustration } from "../components/illustrations/landing-page";
 import BasicStatistics from "../components/StatsCard";
 import ThreeTierPricingHorizontal from "../components/PackageTier";
-import LargeWithLogoLeft from "../components/Footer";
+import { useRouter } from "next/router";
 
 export default function LandingPage() {
+  const router = useRouter();
+
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -42,11 +42,17 @@ export default function LandingPage() {
             rounded={"full"}
             px={6}
             colorScheme={"brand"}
+            onClick={() => router.push("/signup")}
             _hover={{ bg: "brand.400" }}
           >
             Get started
           </Button>
-          <Button variant="outline" rounded={"full"} px={6}>
+          <Button
+            variant="outline"
+            rounded={"full"}
+            onClick={() => router.push("/blogs")}
+            px={6}
+          >
             Learn more
           </Button>
         </Stack>

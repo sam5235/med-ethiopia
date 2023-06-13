@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 const BlogDetail = () => {
   const router = useRouter();
   const blog = router.query;
-  console.log(blog);
+
   return (
     <Box pt={10}>
       <TinyEditor blog={blog} />
