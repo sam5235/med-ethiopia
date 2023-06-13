@@ -7,24 +7,78 @@ import {
   Grid,
   GridItem,
   Heading,
+  IconButton,
   Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getBlogs } from "../firebase/blogService";
+import { filterBlog, getAdBlogs, getBlogs } from "../firebase/blogService";
 import Link from "next/link";
+import { SearchIcon } from "@chakra-ui/icons";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from "@choc-ui/chakra-autocomplete";
+
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchedBlogs, setSearchedBlogs] = useState([]);
+  const [timeoutId, setTimeoutId] = useState("");
+  const [advertBlogs, setadvertBlogs] = useState([]);
   const popular = posts;
-  const fetchBlogs = async () => {
-    const blogs = await getBlogs();
-    setPosts(blogs);
-    console.log(blogs);
+
+  const searchBlog = () => {
+    filterBlog(searchInput).then((blogs) => {
+      setSearchedBlogs(blogs);
+      setIsLoading(false);
+    });
+  };
+
+  const handeleBlogByTitle = async ({ target: { value } }) => {
+    clearTimeout(timeoutId);
+    setSearchInput(value);
+
+    if (value) {
+      const id = setTimeout(() => {
+        setIsLoading(true);
+        searchBlog();
+      }, [750]);
+      setTimeoutId(id);
+    }
+    {
+      setSearchedBlogs([]);
+    }
   };
 
   useEffect(() => {
+    const fetchBlogs = () => {
+      setIsLoading(true);
+      getBlogs().then((blogs) => {
+        setPosts(blogs);
+        setIsLoading(false);
+      });
+    };
+
+    const fetchAdBlogs = () => {
+      setIsLoading(true);
+      getAdBlogs().then((blogs) => {
+        setadvertBlogs(blogs);
+        setIsLoading(false);
+      });
+    };
+
     fetchBlogs();
+    fetchAdBlogs();
   }, []);
+
+  console.log({ advertBlogs });
 
   return (
     <Grid
@@ -35,16 +89,76 @@ export default function Home() {
       gap={3}
     >
       <GridItem colSpan={8}>
+        <Flex mb="5">
+          <InputGroup zIndex={100}>
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputLeftElement>
+            <AutoComplete openOnFocus emptyState={""}>
+              <AutoCompleteInput
+                placeholder="Search Blogs..."
+                border="1px solid"
+                borderColor="brand.500"
+                pl={9}
+                value={searchInput}
+                onChange={handeleBlogByTitle}
+                variant="filled"
+              />
+              <AutoCompleteList>
+                {searchedBlogs.map((blog, cid) => (
+                  <AutoCompleteItem
+                    key={`option-${cid}`}
+                    value={blog.title}
+                    textTransform="capitalize"
+                  >
+                    <Link
+                      href={{
+                        pathname: "/blog-detail",
+                        query: blog,
+                      }}
+                    >
+                      <Flex>
+                        <Image
+                          alt=""
+                          borderRadius="sm"
+                          width={55}
+                          src={blog.coverImage}
+                        />
+
+                        <Box ml={2}>
+                          <Text fontSize="sm" as="b">
+                            {blog.title}
+                          </Text>
+                          <Text fontSize="xs" as="i" noOfLines="1">
+                            {blog.description}
+                          </Text>
+                        </Box>
+                      </Flex>
+                    </Link>
+                  </AutoCompleteItem>
+                ))}
+              </AutoCompleteList>
+            </AutoComplete>
+          </InputGroup>
+          <IconButton
+            mx="2"
+            isLoading={isLoading}
+            colorScheme="brand"
+            aria-label="Call Segun"
+            icon={<SearchIcon />}
+          />
+        </Flex>
+
         {posts.map((blog, index) => {
           return (
             <Link
-            key={index}
+              key={index}
               href={{
                 pathname: "/blog-detail",
                 query: blog,
               }}
             >
-              <Box mb={10} pt={3} >
+              <Box mb={10} pt={3}>
                 <Grid templateColumns="repeat(10, 1fr)">
                   <GridItem width="160px" height="130px" colSpan={2}>
                     <Image
@@ -87,18 +201,18 @@ export default function Home() {
           );
         })}
         <Center p={4}>
-          <Button colorScheme="brand" boxShadow="dark-lg">
+          {/* <Button colorScheme="brand" boxShadow="dark-lg">
             More
-          </Button>
+          </Button> */}
         </Center>
       </GridItem>
       <GridItem colSpan={4}>
         <Box position="sticky" top="80px" p={3} maxH="300px">
           <Text mb={5} fontSize="xl" as="b">
-            POPULAR THIS WEEK
+            Advert Blogs
           </Text>
           <div style={{ borderBottom: "1px solid black" }}></div>
-          {popular.map((pop, index) => {
+          {advertBlogs.map((pop, index) => {
             if (index < 5)
               return (
                 <Flex mt={7}>

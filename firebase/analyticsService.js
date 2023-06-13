@@ -30,7 +30,7 @@ export const getRecords = async (diseases, start, end) => {
   for (const data of querySnapshot.docs) {
     Lists.push(await parseMoreData(data));
   }
-  console.log({ Lists });
+
   const area_data = getAreaData(diseases, Lists);
   const scatered_data = getScatteredData(diseases, Lists);
 
