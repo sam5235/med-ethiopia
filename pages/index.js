@@ -10,9 +10,20 @@ import { Illustration } from "../components/illustrations/landing-page";
 import BasicStatistics from "../components/StatsCard";
 import ThreeTierPricingHorizontal from "../components/PackageTier";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getMeditopiaStats } from "../firebase/statServices";
 
 export default function LandingPage() {
   const router = useRouter();
+  const [stat, setStat] = useState({});
+
+  useEffect(() => {
+    const fetchStat = () => {
+      getMeditopiaStats().then((stat) => setStat(stat));
+    };
+
+    fetchStat();
+  }, []);
 
   return (
     <Container maxW={"5xl"}>
@@ -61,7 +72,7 @@ export default function LandingPage() {
         </Flex>
       </Stack>
 
-      <BasicStatistics />
+      <BasicStatistics stat={stat} />
 
       <ThreeTierPricingHorizontal />
     </Container>

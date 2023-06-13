@@ -28,7 +28,7 @@ function StatsCard({ title, stat }) {
   );
 }
 
-export default function BasicStatistics() {
+export default function BasicStatistics({ stat }) {
   return (
     <Box maxW="7xl" pb={10} mx={"auto"} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1
@@ -40,9 +40,15 @@ export default function BasicStatistics() {
         What is our company doing?
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-        <StatsCard title={"We serve"} stat={"50,000 patients"} />
-        <StatsCard title={"Working with"} stat={"30 healthcares"} />
-        <StatsCard title={"Provide over"} stat={"100 different blogs"} />
+        <StatsCard title={"We serve"} stat={`${stat.patients} patients`} />
+        <StatsCard
+          title={"Working with"}
+          stat={`${stat.health_centers} healthcares`}
+        />
+        <StatsCard
+          title={"Provide over"}
+          stat={`${stat.blogs} different blogs`}
+        />
       </SimpleGrid>
     </Box>
   );

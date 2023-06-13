@@ -10,13 +10,9 @@ export const getMeditopiaStats = async () => {
   const patients_snapshot = await getCountFromServer(patients_col);
   const patients = patients_snapshot.data().count;
 
-  const records_col = collection(db, "records");
-  const records_snapshot = await getCountFromServer(records_col);
-  const records = records_snapshot.data().count;
-
   const blog_col = collection(db, "blogs");
   const blogs_snapshot = await getCountFromServer(blog_col);
   const blogs = blogs_snapshot.data().count;
 
-  return { health_centers, patients, records, blogs };
+  return { health_centers, patients, blogs };
 };
