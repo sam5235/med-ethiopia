@@ -74,7 +74,7 @@ export default function LandingPage() {
 
       <BasicStatistics stat={stat} />
 
-      <ThreeTierPricingHorizontal />
+      <ThreeTierPricingHorizontal stat={stat}/>
     </Container>
   );
 }

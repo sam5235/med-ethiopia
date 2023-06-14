@@ -12,11 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FaCheckCircle } from "react-icons/fa";
 
-const options = [
-  { id: 1, desc: "1 lorem ipsum" },
-  { id: 2, desc: "Lorem, ipsum dolor." },
-  { id: 3, desc: "Monthly Updates" },
-];
+
 
 const PackageTier = ({ title, options, typePlan, checked = false }) => {
   const colorTextLight = checked ? "white" : "brand.600";
@@ -63,7 +59,11 @@ const PackageTier = ({ title, options, typePlan, checked = false }) => {
     </Stack>
   );
 };
-const ThreeTierPricingHorizontal = () => {
+const ThreeTierPricingHorizontal = ({stat}) => {
+  const options = [
+    { id: 1, desc: `${stat.patients} we record` },
+    { id: 2, desc: `${stat.health_centers} we serve` },
+  ];
   return (
     <Box py={6} px={5} marginTop={100}>
       <Stack spacing={4} width={"100%"} direction={"column"}>
@@ -96,10 +96,10 @@ const ThreeTierPricingHorizontal = () => {
               md: "60%",
             }}
           >
-            <Text textAlign={"center"}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-              quod in iure vero. Facilis magnam, sed officiis commodi labore
-              odit.
+            <Text textAlign={"center"} as='b'>
+              centralized and comprehensive electronic health record system that
+              improves the efficiency, accessibility, and quality of healthcare
+              services in Ethiopia.
             </Text>
           </Stack>
         </Stack>

@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 function StatsCard({ title, stat }) {
+  console.log(stat);
   return (
     <Stat
       px={{ base: 4, md: 8 }}
@@ -22,6 +23,7 @@ function StatsCard({ title, stat }) {
         {title}
       </StatLabel>
       <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
+
         {stat}
       </StatNumber>
     </Stat>
