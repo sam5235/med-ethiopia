@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import {
   Box,
   Container,
+  Flex,
+  Image,
   Link,
   SimpleGrid,
   Stack,
@@ -52,10 +54,14 @@ export default function LargeWithLogoLeft() {
         >
           <Stack spacing={6}>
             <Box>
-              <Logo color={useColorModeValue("gray.700", "white")} />
+              <Flex alignItems='center'>
+                <Image height={20} width={20} src="logo-teal.png" />
+                <Text as='b' size={15}>Med-Ethiopia</Text>
+              </Flex>
+              {/* <Logo color={useColorModeValue("gray.700", "white")} /> */}
             </Box>
             <Text fontSize={"sm"}>
-              © 2022 Chakra Templates. All rights reserved
+              © 2022 Med-Ethiopia. All rights reserved
             </Text>
           </Stack>
           <Stack align={"flex-start"}>
