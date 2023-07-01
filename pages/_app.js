@@ -8,6 +8,7 @@ import theme from "../theme/theme";
 import ProtectedRoute from "../components/wrappers/ProtectedRoute";
 import AuthContextProvider from "../context/AuthContext";
 import Layout from "../Layout/Layout";
+import SEOTags from "../components/SEOTags";
 
 NProgress.configure({ showSpinner: false });
 
@@ -25,6 +26,12 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ChakraProvider theme={theme}>
+      <SEOTags
+        title="Med-Ethiopia"
+        description="Effortlessly manage your centralized medical system with our powerful admin website."
+        url="https://med-ethiopia.vercel.app/"
+        image="https://med-ethiopia.vercel.app/landing-2.svg"
+      />
       <AuthContextProvider>
         <Layout>
           {shouldBeAuth ? (
